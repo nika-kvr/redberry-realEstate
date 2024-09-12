@@ -1,26 +1,30 @@
+$('#addListingBtn').click(() => {
+  window.location.href = 'assets/pages/addListing.html'
+})
+
 // filter buttons func
-$('#regioniBtn').click(function() {
+$('#regioniBtn').click( () => {
   $('.regioniDropdown').toggle();
   $('.fasiDropdown').css('display', 'none');
   $('.fartobiDropdown').css('display', 'none');
   $('.sadzDropdown').css('display', 'none');
 });
 
-$('#fasiBtn').click(function() {
+$('#fasiBtn').click(() =>  {
   $('.fasiDropdown').toggle();
   $('.regioniDropdown').css('display', 'none');
   $('.fartobiDropdown').css('display', 'none');
   $('.sadzDropdown').css('display', 'none');
 });
 
-$('#fartobiBtn').click(function() {
+$('#fartobiBtn').click(() =>  {
   $('.fartobiDropdown').toggle();
   $('.regioniDropdown').css('display', 'none');
   $('.fasiDropdown').css('display', 'none');
   $('.sadzDropdown').css('display', 'none');
 });
 
-$('#sadzBtn').click(function() {
+$('#sadzBtn').click(() =>  {
   $('.sadzDropdown').toggle();
   $('.fasiDropdown').css('display', 'none');
   $('.fartobiDropdown').css('display', 'none');
@@ -52,7 +56,7 @@ let addMaxFartobi = (element)=>{
 
 
 //get regions
-$(document).ready(function() {
+$(document).ready(() => {
   $.ajax({
       url: 'https://api.real-estate-manager.redberryinternship.ge/api/regions',
       type: 'GET',

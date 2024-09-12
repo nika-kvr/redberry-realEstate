@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/main.css">
   <title>Listing</title>
+  <link rel="stylesheet" href="assets/css/main.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -13,8 +13,10 @@
     <hr>
   </header>
 
-  <div class="mainListingDiv">
-    <div>
+  <main>
+
+    <div class="mainListingDiv">
+      <div>
       <div class="mainFilterDiv">
         <div class="filtersContainer">
           <button id="regioniBtn" class="dropdownFilter">რეგიონი <img src="assets/images/dropwodn.svg" alt=""></button>
@@ -22,9 +24,9 @@
           <button id="fartobiBtn" class="dropdownFilter">ფართობი <img src="assets/images/dropwodn.svg" alt=""></button>
           <button id="sadzBtn" class="dropdownFilter">საძინებლების რაოდენობა <img src="assets/images/dropwodn.svg" alt=""></button>
         </div>
-    
+        
         <div class="filterDivBtns">
-          <button class="orngBtn">+ ლისტინგის დამატება  </button>
+          <button id="addListingBtn" class="orngBtn">+ ლისტინგის დამატება  </button>
           <button class="whiteOrngBtn">+ აგენტის დამატება</button>
         </div>
       </div>
@@ -40,16 +42,16 @@
           <button class="archevaBtn">არჩევა</button>
         </div>
       </div>
-
+      
       <div class="fasiDropdown">
         <p>ფასის მიხედვით</p>
-
+        
         <div class="priceDivMain">
           <div class="pricesDiv">
             <input value='' id="minPriceInput" type="number" placeholder="დან">
-
+            
             <p class="priceHeader">მინ. ფასი</p>
-
+            
             <p class="prices" data-value= 50000 onclick="addMinPrice(this)">50,000 ₾</p>
             <p class="prices" data-value= 100000 onclick="addMinPrice(this)">100,000 ₾</p>
             <p class="prices" data-value= 150000 onclick="addMinPrice(this)">150,000 ₾</p>
@@ -67,16 +69,16 @@
             <p class="prices" data-value= 200000 onclick="addMaxPrice(this)">200,000 ₾</p>
             <p class="prices" data-value= 300000 onclick="addMaxPrice(this)">300,000 ₾</p>
           </div>
-
+          
         </div>
         <div class="archevaBtnDiv">
           <button class="archevaBtn">არჩევა</button>
         </div>
       </div>
-
+      
       <div class="fartobiDropdown">
         <p>ფართობის მიხედვით</p>
-
+        
         <div class="mainFartobiFilter">
           <div class="maxminDivFartobi">
             <div class="pricesDiv">
@@ -103,29 +105,30 @@
           <div class="archevaBtnDiv">
             <button class="archevaBtn" id="fartobiBtnArcheva">არჩევა</button>
           </div>
-          </div>
-        </div>
-        
-        <div class="sadzDropdown">
-          <p>საძინებლების რაოდენობა</p>
-          <input type="number" id="sadzInput">
-          <div class="archevaBtnDiv">
-            <button class="archevaBtn">არჩევა</button>
-          </div>
         </div>
       </div>
       
-
+      <div class="sadzDropdown">
+        <p>საძინებლების რაოდენობა</p>
+        <input type="number" id="sadzInput">
+        <div class="archevaBtnDiv">
+          <button class="archevaBtn">არჩევა</button>
+        </div>
+      </div>
     </div>
-
-    </div>
-
-    <div class="realEstateList">
-      <!-- <h1>sia</h1> -->
-    </div>
-
+    
+    
   </div>
+  
+</div>
 
-  <script src="assets/javascript/index.js"></script>
+<div class="realEstateList">
+  <!-- <h1>sia</h1> -->
+</div>
+
+</div>
+</main>
+
+<script src="assets/javascript/index.js"></script>
 </body>
 </html>

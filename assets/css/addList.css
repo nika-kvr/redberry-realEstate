@@ -1,0 +1,72 @@
+main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+input{
+  outline: none;
+  padding: 10px;
+  font-size: 16px;
+}
+.pageHeader{
+  font-size: 36px;
+  margin: 60px;
+}
+
+.formDiv{
+  width: 790px;
+}
+.formHeader{
+  font-size: 22px;
+}
+.radioInputDivs{
+  display: flex;
+  gap: 70px;
+  margin-top: 10px;
+}
+.mainLocationDiv{
+  margin-top: 80px;
+}
+.locInputsDivMain{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.locInputDiv{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.inputLabel{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+input[type="text"]{
+  width: 384px;
+  height: 42px;
+  border: 1px solid #808A93;
+  border-radius: 6px;
+}
+
+.mainDetailsDiv{
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+}
+.detailsInputs{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+#priceInputDiv{
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+.areaInputDiv{
+  display: flex;
+  margin-top: 40px;
+}

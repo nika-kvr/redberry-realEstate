@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add listing</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/addList.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <header></header>
+    <img id="redberryLogo" src="../images/redberry logo.png" alt="">
+    <hr>
+  </header>
+
+  <main>
+    <div class="pageHeader">
+      ლისტინგის დამატება
+    </div>
+    <div class="formDiv">
+      <form action="">
+          <p class="formHeader">გარიგების ტიპი</p>
+          <div class="radioInputDivs">
+            <div>
+              <input type="radio" id="buyInput" name="radioInput">
+              <label for="buyInput">იყიდება</label>
+            </div>
+
+            <div>
+              <input type="radio" id="rentInput" name="radioInput">
+              <label for="rentInput">ქირავდება</label>
+            </div>
+          </div>
+
+        <div class="mainLocationDiv">
+          <p class="formHeader">მდებარეობა</p>
+
+          <div class="locInputsDivMain">
+
+            <div class="locInputDiv">
+              <div class="inputLabel">
+                <label for="">მისამართი *</label>
+                <input type="text">
+              </div>
+              <div class="inputLabel">
+                <label for="">საფოსტო ინდექსი *</label>
+                <input type="text">
+              </div>
+            </div>
+            <div class="locInputDiv">
+              <div class="inputLabel">
+                <label for="">რეგიონი *</label>
+                <input type="text">
+              </div>
+              <div class="inputLabel">
+                <label for="">ქალაქი *</label>
+                <input type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mainDetailsDiv">
+
+          <p class="formHeader">ბინის დეტალები</p>
+          <div class="detailsInputs">
+            <div class="inputLabel">
+              <label for="priceInput">ფასი</label>
+              <input id="priceInput" type="text">
+            </div>
+            <div id="priceInputDiv" class="inputLabel">
+              <label for="areaInput">ფართობი</label>
+              <input id="areaInput" type="text">
+            </div>
+            <div class="inputLabel">
+              <label for="bedroomInput">საძინებლების რაოდენობა</label>
+              <input id="bedroomInput" type="text">
+            </div>
+          </div>
+          <!-- dasamtavrebeli -->
+          <div class="inputLabel" class="areaInputDiv" >
+            <label for="bedroomInput">აღწერა</label>
+            <input id="bedroomInput" type="text">
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="../javascript/addList.js"></script>
+</body>
+</html>
