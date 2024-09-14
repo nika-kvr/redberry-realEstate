@@ -27,7 +27,7 @@
         
         <div class="filterDivBtns">
           <button id="addListingBtn" class="orngBtn">+ ლისტინგის დამატება  </button>
-          <button class="whiteOrngBtn">+ აგენტის დამატება</button>
+          <button id="openModal" class="whiteOrngBtn">+ აგენტის დამატება</button>
         </div>
       </div>
     </div>
@@ -128,6 +128,27 @@
 
 </div>
 </main>
+
+<div id="myModal" class="modal">
+  <div class="modalContent">
+    <p class="modalHeader">აგენტის დამატება</p>
+    <form action="">
+      <div class="modalForm">
+        <div class="nameInputsMainDiv">
+          <div class="nameInputsDiv">
+            <label for="fname">სახელი *</label>
+            <input type="text" id="fname" name="fname">
+          </div>
+
+          <div class="nameInputsDiv">
+            <label for="lname">გვარი *</label>
+            <input type="text" id="lname" name="lname">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script src="assets/javascript/index.js"></script>
 </body>

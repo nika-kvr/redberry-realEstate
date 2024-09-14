@@ -3,7 +3,7 @@ main{
   flex-direction: column;
   align-items: center;
 }
-input{
+input, select{
   outline: none;
   padding: 10px;
   font-size: 16px;
@@ -42,7 +42,7 @@ input{
 .inputLabel{
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
 }
 
 input[type="text"]{
@@ -69,4 +69,87 @@ input[type="text"]{
 .areaInputDiv{
   display: flex;
   margin-top: 40px;
+}
+
+input[type="radio"]{
+  all:unset;
+  display: flex;
+  align-items: center;
+}
+
+.radioInputDivs div{
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+  position: relative;
+}
+
+input[type='radio']:after {
+  width: 17px;
+  height: 17px;
+  border-radius: 17px;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 1px solid black;
+}
+input[type='radio']:checked:before {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  background-color: black;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  transform: translate(-50%, -50%);
+}
+
+select{
+  border: 1px solid #808A93;
+  border-radius: 6px;
+  width: 384px;
+  height: 42px;
+}
+input[type="number"]{
+  all: unset;
+  border: 1px solid #808A93;
+  border-radius: 6px;
+  padding: 0 10px;
+  width: 362px;
+  height: 39.88px;
+  
+}
+
+.aboutDiv{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+#aboutInput{
+  all: unset;
+  font-size: 16px;
+  width: 767px;
+  height: 135px;
+  border-radius: 6px;
+  padding: 10px;
+  border: 1px solid #808A93;
+}
+.imgDiv{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+.imgUploadDiv{
+  display: flex;
+  justify-content: center;
+  width: 788px;
+  height: 120px;
+  border: 2px dashed #2D3648; 
+  border-radius: 6px;
+  cursor: pointer;
 }

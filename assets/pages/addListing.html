@@ -23,12 +23,16 @@
           <p class="formHeader">გარიგების ტიპი</p>
           <div class="radioInputDivs">
             <div>
-              <input type="radio" id="buyInput" name="radioInput">
+              <div>
+                <input type="radio" id="buyInput" name="radioInput">
+              </div>
               <label for="buyInput">იყიდება</label>
             </div>
 
             <div>
-              <input type="radio" id="rentInput" name="radioInput">
+              <div>
+                <input type="radio" id="rentInput" name="radioInput">
+              </div>
               <label for="rentInput">ქირავდება</label>
             </div>
           </div>
@@ -45,17 +49,21 @@
               </div>
               <div class="inputLabel">
                 <label for="">საფოსტო ინდექსი *</label>
-                <input type="text">
+                <input id="zipcodeInput" type="number">
               </div>
             </div>
             <div class="locInputDiv">
               <div class="inputLabel">
                 <label for="">რეგიონი *</label>
-                <input type="text">
+                <select id="regionsSelect">
+                  <option hidden></option>
+                </select>
               </div>
               <div class="inputLabel">
                 <label for="">ქალაქი *</label>
-                <input type="text">
+                <select id="citiesSelect">
+                  <option hidden></option>
+                </select>
               </div>
             </div>
           </div>
@@ -67,21 +75,35 @@
           <div class="detailsInputs">
             <div class="inputLabel">
               <label for="priceInput">ფასი</label>
-              <input id="priceInput" type="text">
+              <input id="priceInput" type="number">
             </div>
             <div id="priceInputDiv" class="inputLabel">
               <label for="areaInput">ფართობი</label>
-              <input id="areaInput" type="text">
+              <input id="areaInput" type="number">
             </div>
             <div class="inputLabel">
               <label for="bedroomInput">საძინებლების რაოდენობა</label>
-              <input id="bedroomInput" type="text">
+              <input id="bedroomInput" type="number">
             </div>
           </div>
-          <!-- dasamtavrebeli -->
-          <div class="inputLabel" class="areaInputDiv" >
-            <label for="bedroomInput">აღწერა</label>
-            <input id="bedroomInput" type="text">
+
+          <div class="aboutDiv" >
+            <label for="aboutInput">აღწერა</label>
+            <textarea name="" id="aboutInput"></textarea>
+          </div>
+
+          <div class="imgDiv">
+            <p>ატვირთეთ ფოტო</p>
+            <div class="imgUploadDiv">
+              <img src="../images/imgUpload.svg" alt="">
+            </div>
+          </div>
+          <div class="agentDiv">
+            <p class="formHeader">აგენტი</p>
+            <p>აირჩიე</p>
+            <select >
+              
+            </select>
           </div>
         </div>
       </form>
