@@ -304,14 +304,59 @@ input[type='number']::placeholder{
 .modalForm{
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  gap: 28px;
 }
 
-.nameInputsMainDiv{
+.inputsDiv{
   display: flex;
   flex-direction: row;
+  gap: 30px;
 }
 
 .nameInputsDiv{
   display: flex;
   flex-direction: column;
+  gap: 5px;
+}
+
+#addAgentHeader{
+  margin-bottom: 60px;
+}
+
+input{
+  width: 384px;
+  height: 42px;
+  border: 1px solid #808A93;
+  border-radius: 6px;
+  outline: none;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.imgdiv{
+  display: flex;
+  flex-direction: column;
+  margin-top: 28px;
+  gap: 10px; 
+}
+.agentBtnsDiv{
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+#previewImage{
+  width: 82px;
+  border-radius: 4px;
+}
+.imgUploadDiv{
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 799px;
+  height: 120px;
+  border: 2px dashed #2D3648; 
+  border-radius: 6px;
+  cursor: pointer;
 }

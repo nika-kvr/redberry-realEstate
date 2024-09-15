@@ -64,6 +64,77 @@ if(localStorage.getItem("selectedRegions") !== null){
 
 const selectedRegions = new Set(JSON.parse(selectedRegionsString));
 
+
+
+
+// modal func
+
+$('#openModal').on('click', function() {
+  $('#myModal').fadeIn();
+});
+
+$(window).on('click', (event) => {
+  if ($(event.target).is('#myModal')) {
+    $('#myModal').fadeOut();
+  }
+});
+
+
+$('#closeModalBtn').on('click', () => {
+  $('#myModal').fadeOut();
+});
+
+// agent image upload
+
+$('.imgUploadDiv').on('click', function() {
+  $('#imageUpload').click();
+});
+
+$('#imageUpload').on('change', function() {
+  const file = this.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    $('#previewImage').attr('src', e.target.result).show();
+    $('#deleteImgBtn').show();
+    $('#addImgSvg').hide();
+  };
+  reader.readAsDataURL(file);
+});
+
+
+// post agent
+$('#agentForm').on('submit', function(event) {
+  event.preventDefault(); 
+
+  const formData = new FormData(this);
+
+  const token = '9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44';
+
+  $.ajax({
+    url: 'https://api.real-estate-manager.redberryinternship.ge/api/agents',
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    success: function(response) {
+      console.log('Success:', response);
+    },
+    error: function(xhr, status, error) {
+      console.error('Error:', error);
+    }
+  });
+});
+
+// add agent validations
+
+const $form = $('#form');
+const $submitBtn = $('#submitBtn');
+
+
+
 //get all regions
 $(document).ready(() => {
   $.ajax({
@@ -93,18 +164,4 @@ $(document).ready(() => {
         console.log('Error:', textStatus, errorThrown);
       }
   });
-});
-
-
-
-// modal func
-
-$('#openModal').on('click', function() {
-  $('#myModal').fadeIn();
-});
-
-$(window).on('click', (event) => {
-  if ($(event.target).is('#myModal')) {
-      $('#myModal').fadeOut();
-  }
 });

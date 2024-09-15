@@ -123,7 +123,7 @@
 </div>
 
 <div class="realEstateList">
-  <!-- <h1>sia</h1> -->
+  real estates
 </div>
 
 </div>
@@ -131,19 +131,43 @@
 
 <div id="myModal" class="modal">
   <div class="modalContent">
-    <p class="modalHeader">აგენტის დამატება</p>
-    <form action="">
+    <p id="addAgentHeader" class="modalHeader">აგენტის დამატება</p>
+    <form id="agentForm">
       <div class="modalForm">
-        <div class="nameInputsMainDiv">
+        <div class="inputsDiv">
           <div class="nameInputsDiv">
-            <label for="fname">სახელი *</label>
-            <input type="text" id="fname" name="fname">
+            <label for="name">სახელი *</label>
+            <input type="text" id="name" name="name">
           </div>
 
           <div class="nameInputsDiv">
-            <label for="lname">გვარი *</label>
-            <input type="text" id="lname" name="lname">
+            <label for="surname">გვარი *</label>
+            <input type="text" id="surname" name="surname">
           </div>
+        </div>
+        <div class="inputsDiv">
+          <div class="nameInputsDiv">
+            <label for="email">ელ-ფოსტა *</label>
+            <input type="text" id="email" name="email">
+          </div>
+
+          <div class="nameInputsDiv">
+            <label for="phone">ტელეფონის ნომერი *</label>
+            <input type="text" id="phone" name="phone">
+          </div>
+        </div>
+
+        <div class="imgdiv">
+          <p>ატვირთეთ ფოტო *</p>
+          <div class="imgUploadDiv">
+            <img id="addImgSvg" src="assets/images/imgUpload.svg" alt="">
+            <img id="previewImage" src="" alt="" hidden>
+          </div>  
+          <input type="file" name="avatar" id="imageUpload" style="display: none;">
+        </div>
+        <div class="agentBtnsDiv">
+          <button type="button" id="closeModalBtn" class="whiteOrngBtn">გაუქმება</button>
+          <button id="submitBtn" class="orngBtn">დაამატე აგენტი</button>
         </div>
       </div>
     </form>
