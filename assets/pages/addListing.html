@@ -24,7 +24,7 @@
           <div class="radioInputDivs">
             <div>
               <div>
-                <input type="radio" id="buyInput" name="radioInput">
+                <input checked type="radio" id="buyInput" name="radioInput">
               </div>
               <label for="buyInput">იყიდება</label>
             </div>
@@ -74,39 +74,45 @@
           <p class="formHeader">ბინის დეტალები</p>
           <div class="detailsInputs">
             <div class="inputLabel">
-              <label for="priceInput">ფასი</label>
+              <label for="priceInput">ფასი *</label>
               <input id="priceInput" type="number">
             </div>
             <div id="priceInputDiv" class="inputLabel">
-              <label for="areaInput">ფართობი</label>
+              <label for="areaInput">ფართობი *</label>
               <input id="areaInput" type="number">
             </div>
             <div class="inputLabel">
-              <label for="bedroomInput">საძინებლების რაოდენობა</label>
+              <label for="bedroomInput">საძინებლების რაოდენობა *</label>
               <input id="bedroomInput" type="number">
             </div>
           </div>
 
           <div class="aboutDiv" >
-            <label for="aboutInput">აღწერა</label>
+            <label for="aboutInput">აღწერა *</label>
             <textarea name="" id="aboutInput"></textarea>
           </div>
 
           <div class="imgDiv">
-            <p>ატვირთეთ ფოტო</p>
+            <p>ატვირთეთ ფოტო *</p>
             <div class="imgUploadDiv">
               <img src="../images/imgUpload.svg" alt="">
             </div>
           </div>
           <div class="agentDiv">
             <p class="formHeader">აგენტი</p>
-            <p>აირჩიე</p>
-            <select >
-              
-            </select>
+            <div>
+              <p>აირჩიე</p> 
+              <select >
+                
+              </select>
+            </div>
           </div>
         </div>
       </form>
+      <div class="formBtnsDiv">
+        <button id="formGaukmeba" class="whiteOrngBtn">გაუქმება</button>
+        <button class="orngBtn">დაამატე ლისტინგი</button>
+      </div>
     </div>
   </main>
 

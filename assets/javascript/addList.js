@@ -39,4 +39,22 @@ $(document).ready(() => {
     }
   });
 });
-// get all cities
+
+// get all agents
+
+$.ajax({
+  url: 'https://api.real-estate-manager.redberryinternship.ge/api/agents', 
+  type: 'GET',
+  headers: {
+      'Authorization': 'Bearer 9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44' 
+  },
+  success: function(response) {
+    let agents = response;
+    agents.forEach(agent => {
+      console.log(agent.name)
+    })
+  },
+  error: function(xhr, status, error) {
+    console.log('Error:', error); 
+  }
+});

@@ -30,6 +30,10 @@ button{
   border-radius: 10px;
 }
 
+.orngBtn:hover{
+  background-color: #DF3014;
+}
+
 .whiteOrngBtn{
   all:unset;
   background-color: #fff;
@@ -38,8 +42,12 @@ button{
   font-size: medium;
   padding: 20px;
   border-radius: 10px;
-  border: 2px solid #F93B1D;
+  border: 1px solid #F93B1D;
   margin-left: 20px;
+}
+.whiteOrngBtn:hover{
+  background-color: #F93B1D;
+  color: #FFF;
 }
 
 .mainListingDiv{
@@ -271,7 +279,7 @@ input[type='number']::placeholder{
 }
 
 .modal {
-  /* display: none;            */
+  display: none;           
   position: fixed;         
   z-index: 1000;            
   left: 0;
@@ -370,7 +378,7 @@ input{
 }
 #deleteImgBtn{
   position: absolute;
-  top: 85px;
+  top: 80px;
   left: 421px;
   cursor: pointer;
 }

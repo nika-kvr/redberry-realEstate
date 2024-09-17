@@ -8,6 +8,7 @@ $('#regioniBtn').click( () => {
   $('.fasiDropdown').css('display', 'none');
   $('.fartobiDropdown').css('display', 'none');
   $('.sadzDropdown').css('display', 'none');
+  $('#regioniBtn').toggleClass('active');
 });
 
 $('#fasiBtn').click(() =>  {
@@ -85,6 +86,15 @@ $('#closeModalBtn').on('click', () => {
 
 // agent image upload
 
+let locStrgImg = localStorage.getItem('agentImg');
+
+if(locStrgImg !== ''){
+  $('#previewImage').attr('src', locStrgImg).show();
+  $('#deleteImgBtn').show();
+  $('.imgUploadDiv').css('border-color', '#808A93');
+  $('#uploadImg').hide();
+}
+
 $('#uploadImg').on('click', function() {
   $('#imageUpload').click();
 });
@@ -97,6 +107,7 @@ $('#imageUpload').on('change', function() {
     $('#deleteImgBtn').show();
     $('.imgUploadDiv').css('border-color', '#808A93');
     $('#uploadImg').hide();
+    localStorage.setItem('agentImg', e.target.result)
   };
   reader.readAsDataURL(file);
 });
@@ -108,6 +119,7 @@ $('#deleteImgBtn').on('click', function() {
   $('#previewImage').attr('src', '').hide();
   $('#deleteImgBtn').hide();
   $('#uploadImg').show();
+  localStorage.setItem('agentImg', '')
 });
 
 
@@ -129,6 +141,13 @@ let isEmailValid;
 let isPhoneValid;
 let isImageValid;
 
+// get data from localstorage
+
+nameInput.val(localStorage.getItem('agentName'));
+surnameInput.val(localStorage.getItem('agentSurname'));
+emailInput.val(localStorage.getItem('agentEmail'));
+phoneInput.val(localStorage.getItem('agentPhone'));
+
 // name validation
 let validateName = () => {
   if(nameInput.val().length === 0){
@@ -149,6 +168,7 @@ let validateName = () => {
     nameInput.css('border-color', '#808A93');
     isNameValid=true;
   }
+  localStorage.setItem('agentName', nameInput.val())
 }
 
 // surname validation
@@ -171,6 +191,7 @@ let validateSurname = ()=> {
     surnameInput.css('border-color', '#808A93');
     isSurnameValid= true;
   }
+  localStorage.setItem('agentSurname', surnameInput.val())
 }
 // emal validation
 let validateEmail = ()=> {
@@ -192,6 +213,7 @@ let validateEmail = ()=> {
     emailInput.css('border-color', '#808A93');
     isEmailValid= true;
   }
+  localStorage.setItem('agentEmail', emailInput.val())
 }
 
 // phone validation
@@ -227,6 +249,7 @@ let validatePhone = ()=> {
     isPhoneValid= true;
   }
 
+  localStorage.setItem('agentPhone', phoneInput.val());
 }
 
 // image validation
@@ -238,6 +261,7 @@ let validateImage = ()=> {
     $('.imgUploadDiv').css('border-color', '#808A93');
     isImageValid = true;
   }
+  localStorage.setItem('agentImg', imgInput.val());
 }
 
 nameInput.on('input', validateName);

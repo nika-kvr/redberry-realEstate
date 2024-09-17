@@ -153,3 +153,17 @@ input[type="number"]{
   border-radius: 6px;
   cursor: pointer;
 }
+.agentDiv{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 80px;
+}
+.formBtnsDiv{
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 15px;
+  margin-top: 90px;
+  margin-bottom: 80px;
+}
