@@ -345,18 +345,35 @@ input{
   justify-content: flex-end;
   gap: 15px;
 }
+
 #previewImage{
   width: 82px;
   border-radius: 4px;
 }
 .imgUploadDiv{
   display: flex;
-  position: relative;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 799px;
   height: 120px;
   border: 2px dashed #2D3648; 
   border-radius: 6px;
+}
+#uploadImg{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+}
+#deleteImgBtn{
+  position: absolute;
+  top: 85px;
+  left: 421px;
+  cursor: pointer;
+}
+span{
+  font-size: 14px;
 }
