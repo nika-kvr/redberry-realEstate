@@ -51,7 +51,9 @@ $.ajax({
   success: function(response) {
     let agents = response;
     agents.forEach(agent => {
-      console.log(agent.name)
+      console.log(agent)
+      let newAgentOption = $(`<option data-agent-id = "${agent.id}" value = "${agent.name} ${agent.surname}">${agent.name} ${agent.surname}</option>`);
+      $('#agentSelectfield').append(newAgentOption);
     })
   },
   error: function(xhr, status, error) {
