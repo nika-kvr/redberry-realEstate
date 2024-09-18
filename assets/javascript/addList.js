@@ -1,3 +1,5 @@
+let citiesData = 
+
 // get all cities
 $.ajax({
   url: 'https://api.real-estate-manager.redberryinternship.ge/api/cities',
@@ -14,29 +16,41 @@ $.ajax({
             let newOption = $(`<option value = "${item.id}">${item.name}</option>`);
             $('#regionsSelect').append(newOption);
             if(Number(localStorage.getItem('addlistRegion')) === item.id){
-              $('#regionsSelect').val(item.id)
-              console.log(localStorage.getItem('addlistRegion'))
+              $('#regionsSelect').val(item.id);
             }
           })
 
           $('#regionsSelect').on('change', (e)=>{
             const selectedRegionId = $('#regionsSelect').val();
-            console.log(selectedRegionId)
             $('#citiesSelect').empty();
             cities.forEach(citie => {
-              if(citie.region_id === selectedRegionId){
-                let newCitieOption = $(`<option data-region-id = "${citie.region_id}" value = "${citie.name}">${citie.name}</option>`);
-                $('#citiesSelect').append(newCitieOption)
+              if(Number(citie.region_id) == selectedRegionId){
+                let newCitieOption = $(`<option value = "${citie.id}">${citie.name}</option>`);
+                $('#citiesSelect').append(newCitieOption);
               }
             })
+            $('#citiesSelect').val('')
           })
-    
+          // onload cities selectfield
+          if(localStorage.getItem('addlistCity')){
+            const selectedRegionId = $('#regionsSelect').val();
+            $('#citiesSelect').empty();
+            cities.forEach(citie => {
+            if(Number(citie.region_id) == selectedRegionId){
+              let newCitieOption = $(`<option value = "${citie.id}">${citie.name}</option>`);
+              $('#citiesSelect').append(newCitieOption);
+              if(Number(localStorage.getItem('addlistCity')) === citie.id && localStorage.getItem('addlistCity')){
+                $('#citiesSelect').val(citie.id)
+              }
+              }
+            })
+          }
+          
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log('Error:', textStatus, errorThrown);
         }
     });
-
   },
   error: function(jqXHR, textStatus, errorThrown) {
     console.log('Error:', textStatus, errorThrown);
@@ -44,7 +58,6 @@ $.ajax({
 });
 
 // get all agents
-
 $.ajax({
   url: 'https://api.real-estate-manager.redberryinternship.ge/api/agents', 
   type: 'GET',
@@ -54,7 +67,6 @@ $.ajax({
   success: function(response) {
     let agents = response;
     agents.forEach(agent => {
-      // console.log(agent)
       let newAgentOption = $(`<option data-agent-id = "${agent.id}" value = "${agent.name} ${agent.surname}">${agent.name} ${agent.surname}</option>`);
       $('#agentSelectfield').append(newAgentOption);
     })
@@ -66,6 +78,16 @@ $.ajax({
 
 // upload image
 
+
+let uploadedFile;
+
+const validImageTypes = ['image/jpeg', 'image/png'];
+let isImgValid;
+
+if(localStorage.getItem('fileMetadata')){
+  uploadedFile = JSON.parse(localStorage.getItem('fileMetadata'));
+}
+ 
 if(localStorage.getItem('addlistImg')){
   $('#previewImageListing').attr('src', localStorage.getItem('addlistImg'));
   $('.imgPreviewDiv').show();
@@ -77,15 +99,30 @@ $('.imgUploadDivListing').on('click', function() {
 });
 
 $('#imageInput').on('change', function() {
-  const file = this.files[0];
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    $('#previewImageListing').attr('src', e.target.result);
-    $('.imgPreviewDiv').show();
-    $('.imgUploadDivListing').hide();
-    localStorage.setItem('addlistImg', e.target.result)
-  };
-  reader.readAsDataURL(file);
+
+  if(!validImageTypes.includes(this.files[0].type)){
+    uploadedFile = ''
+  }else{
+    uploadedFile = this.files[0];
+  }
+  if(validImageTypes.includes(uploadedFile.type)){
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      $('#previewImageListing').attr('src', e.target.result);
+      $('.imgPreviewDiv').show();
+      $('.imgUploadDivListing').hide();
+      localStorage.setItem('addlistImg', e.target.result);
+      const fileMetadata = {
+        name: uploadedFile.name,
+        size: uploadedFile.size,
+        type: uploadedFile.type
+      };
+      localStorage.setItem('fileMetadata', JSON.stringify(fileMetadata));
+
+    };
+    reader.readAsDataURL(uploadedFile);
+  }
+  
 });
 
 $('#deleteImgLIsting').on('click', function() {
@@ -94,7 +131,16 @@ $('#deleteImgLIsting').on('click', function() {
   $('#previewImageListing').attr('src', '');
   $('.imgUploadDivListing').show();
   $('.imgPreviewDiv').hide();
-  localStorage.setItem('addlistImg', '')
+  localStorage.setItem('addlistImg', '');
+  localStorage.setItem('fileMetadata', '');
+  
+  $('#requiredImg').css('color', 'red');
+  $('#typeImg').css('color', 'red');
+  $('#sizeImg').css('color', 'red');
+  $('.imgBackgroundDiv').css('border-color', 'red');
+  uploadedFile = ''
+  isImgValid = false;
+
 });
 
 // add listing validations
@@ -121,13 +167,16 @@ let isPriceValid;
 let isAreaValid;
 let isBedroomsValid;
 let isDescriptionValid;
-let isImgValid;
 let isAgentValid;
 
 
 // get data from localstorage
-addressInput.val(localStorage.getItem('addlistAddress'))
-zipcodeInput.val(localStorage.getItem('addlistZipcode'))
+addressInput.val(localStorage.getItem('addlistAddress'));
+zipcodeInput.val(localStorage.getItem('addlistZipcode'));
+priceInput.val(localStorage.getItem('addlistPrice'));
+areaInput.val(localStorage.getItem('addlistArea'));
+bedroomsInput.val(localStorage.getItem('addlistBedrooms'));
+descriptionInput.val(localStorage.getItem('addlistDescription'));
 
 // address validation
 let validateAddress = ()=>{
@@ -190,19 +239,212 @@ let validateRegion = ()=>{
     regionInput.css('border-color', '#808A93');
     isRegionValid = true;
   }
-  localStorage.setItem('addlistRegion', regionInput.val())
+  if(regionInput.val().length !== 0){
+    localStorage.setItem('addlistRegion', regionInput.val());
+  }
 }
+regionInput.on('change', validateRegion);
 
-// BUG 
-regionInput.on('change', validateRegion)
-// BUG 
+// city validation
+let validateCity = ()=>{
+  if(citieInput.val() === null){
+    $('#requiredCity').css('color', 'red');
+    citieInput.css('border-color', 'red');
+    iscitieValid = false;
+  }else{
+    $('#requiredCity').css('color', 'green');
+    citieInput.css('border-color', '#808A93');
+    iscitieValid = true;
+  }
+  if(citieInput.val().length !== 0){
+    localStorage.setItem('addlistCity', citieInput.val());
+  }
+}
+citieInput.on('change', validateCity)
 
+
+// price validation
+let validatePrice = ()=>{
+  if(priceInput.val().length === 0){
+    $('#requiredPrice').css('color', 'red');
+    priceInput.css('border-color', 'red');
+    isPriceValid = false;
+  }else{
+    $('#requiredPrice').css('color', 'green');
+    priceInput.css('border-color', '#808A93');
+    isPriceValid = true;
+  }
+  
+  if(/[^0-9.,]/.test(priceInput.val()) || priceInput.val().length === 0){
+    $('#numPrice').css('color', 'red');
+    priceInput.css('border-color', 'red');
+    isPriceValid = false;
+  }else{
+    $('#numPrice').css('color', 'green');
+    priceInput.css('border-color', '#808A93');
+    isPriceValid = true;
+  }
+  localStorage.setItem('addlistPrice', priceInput.val())
+}
+priceInput.on('input', validatePrice);
+
+// area validation
+let validateArea = ()=>{
+  if(areaInput.val().length === 0){
+    $('#requiredArea').css('color', 'red');
+    areaInput.css('border-color', 'red');
+    isAreaValid = false;
+  }else{
+    $('#requiredArea').css('color', 'green');
+    areaInput.css('border-color', '#808A93');
+    isAreaValid = true;
+  }
+  
+  if(/[^0-9.,]/.test(areaInput.val()) || areaInput.val().length === 0){
+    $('#numArea').css('color', 'red');
+    areaInput.css('border-color', 'red');
+    isAreaValid = false;
+  }else{
+    $('#numArea').css('color', 'green');
+    areaInput.css('border-color', '#808A93');
+    isAreaValid = true;
+  }
+  localStorage.setItem('addlistArea', areaInput.val());
+}
+areaInput.on('input', validateArea);
+
+// bedrooms validation
+let validateBedrooms = ()=>{
+  if(bedroomsInput.val().length === 0){
+    $('#requiredBedrooms').css('color', 'red');
+    bedroomsInput.css('border-color', 'red');
+    isBedroomsValid = false;
+  }else{
+    $('#requiredBedrooms').css('color', 'green');
+    bedroomsInput.css('border-color', '#808A93');
+    isBedroomsValid = true;
+  }
+
+  if(/[^0-9.,]/.test(bedroomsInput.val()) || bedroomsInput.val().length === 0){
+    $('#numBedrooms').css('color', 'red');
+    bedroomsInput.css('border-color', 'red');
+    isBedroomsValid = false;
+  }else{
+    $('#numBedrooms').css('color', 'green');
+    bedroomsInput.css('border-color', '#808A93');
+    isBedroomsValid = true;
+  }
+
+  if(!/^-?\d*(\.\d+)?$/.test(bedroomsInput.val()) || bedroomsInput.val().includes('.') || bedroomsInput.val().length === 0){
+    $('#notfloatBedrooms').css('color', 'red');
+    bedroomsInput.css('border-color', 'red');
+    isBedroomsValid = false;
+  }else{
+    $('#notfloatBedrooms').css('color', 'green');
+    bedroomsInput.css('border-color', '#808A93');
+    isBedroomsValid = true;
+  }
+
+  localStorage.setItem('addlistBedrooms', bedroomsInput.val());
+}
+bedroomsInput.on('input', validateBedrooms);
+
+// description validation
+// function to count words
+let countWords = (text)=> {
+  return text.trim().split(/\s+/).filter(Boolean).length;
+}
+let validateDescription = ()=>{
+  if(descriptionInput.val().length === 0){
+    $('#requiredDescription').css('color', 'red');
+    descriptionInput.css('border-color', 'red');
+    isDescriptionValid = false;
+  }else{
+    $('#requiredDescription').css('color', 'green');
+    descriptionInput.css('border-color', '#808A93');
+    isDescriptionValid = true;
+  }
+
+  if(countWords(descriptionInput.val()) < 5){
+    $('#minDescription').css('color', 'red');
+    descriptionInput.css('border-color', 'red');
+    isDescriptionValid = false;
+  }else{
+    $('#minDescription').css('color', 'green');
+    descriptionInput.css('border-color', '#808A93');
+    isDescriptionValid = true;
+  }
+  localStorage.setItem('addlistDescription', descriptionInput.val());
+}
+descriptionInput.on('input', validateDescription);
+
+// image validation
+
+let validateAddlistImg = ()=>{
+  
+  if(uploadedFile === undefined || uploadedFile === ''){
+    $('.imgBackgroundDiv').css('border-color', 'red');
+    $('#requiredImg').css('color', 'red');
+    $('#typeImg').css('color', 'red');
+    $('#sizeImg').css('color', 'red');
+
+    isImgValid = false;
+    return
+  }
+
+  if(uploadedFile.name === ''){
+    $('#requiredImg').css('color', 'red');
+    $('.imgBackgroundDiv').css('border-color', 'red');
+    isImgValid = false;
+  }else{
+    $('#requiredImg').css('color', 'green');
+    $('.imgBackgroundDiv').css('border-color', '#808A93');
+    isImgValid = true;
+  }
+
+  if(!validImageTypes.includes(uploadedFile.type)){
+    $('#typeImg').css('color', 'red');
+    $('.imgBackgroundDiv').css('border-color', 'red');
+    isImgValid = false;
+  }else{
+    $('#typeImg').css('color', 'green');
+    $('.imgBackgroundDiv').css('border-color', '#808A93');
+    isImgValid = true;
+  }
+
+  const maxSizeInBytes = 1 * 1024 * 1024;
+
+  if(uploadedFile.size > maxSizeInBytes || !uploadedFile.size ){
+    $('#sizeImg').css('color', 'red');
+    $('.imgBackgroundDiv').css('border-color', 'red');
+    isImgValid = false;
+  }else{
+    $('#sizeImg').css('color', 'green');
+    $('.imgBackgroundDiv').css('border-color', '#808A93');
+    isImgValid = true;
+  }
+
+}
+addlistImgInput.on('change', validateAddlistImg);
+
+// check form validation
 let isAddlistFormValid = ()=>{
+  validateAddress();
+  validateZipcode();
   validateRegion();
+  validateCity();
+  validatePrice();
+  validateArea();
+  validateBedrooms();
+  validateDescription();
+  validateAddlistImg();
+
+  return isAddressValid;
 }
 
 // post addlist
 submitBtn.on('click', function(event) {
   event.preventDefault(); 
   isAddlistFormValid();
+
 })

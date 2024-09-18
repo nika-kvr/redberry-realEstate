@@ -66,6 +66,7 @@
               <div class="inputLabel">
                 <label for="">ქალაქი *</label>
                 <select id="citiesSelect">
+                  <option value="" hidden disabled selected>აირჩიეთ ქალაქი</option>
                 </select>
                 <span class="inputSpan" id="requiredCity">✓ სავალდებულოა</span>
               </div>
@@ -118,9 +119,9 @@
                 <img id="deleteImgLIsting" src="../images/delete-image-btn.svg" alt="">
               </div>
             </div>
-              <span class="inputSpan">✓ სავალდებულოა</span>
-            <span class="inputSpan">✓ სურათის ტიპი</span>
-            <span class="inputSpan">✓ არ უნდა აღებმატებოდეს 1mb-ის ზომაში</span>
+            <span id="requiredImg" class="inputSpan">✓ სავალდებულოა</span>
+            <span id="typeImg" class="inputSpan">✓ სურათის ტიპი</span>
+            <span id="sizeImg" class="inputSpan">✓ არ უნდა აღებმატებოდეს 1mb-ის ზომაში</span>
           </div>
           <div class="agentDiv">
             <p class="formHeader">აგენტი</p>
