@@ -49,6 +49,7 @@
         <div class="priceDivMain">
           <div class="pricesDiv">
             <input value='' id="minPriceInput" type="number" placeholder="დან">
+            <span id="minPriceSpan" class="priceSpan">₾</span>
             
             <p class="priceHeader">მინ. ფასი</p>
             
@@ -58,10 +59,11 @@
             <p class="prices" data-value= 200000 onclick="addMinPrice(this)">200,000 ₾</p>
             <p class="prices" data-value= 300000 onclick="addMinPrice(this)">300,000 ₾</p>
           </div>
-  
+          
           <div class="pricesDiv">
             <input id="maxPriceInput" type="number" placeholder="მდე">
             <p class="priceHeader">მაქს. ფასი</p>
+            <span id="maxPriceSpan" class="priceSpan">₾</span>
 
             <p class="prices" data-value= 50000 onclick="addMaxPrice(this)">50,000 ₾</p>
             <p class="prices" data-value= 100000 onclick="addMaxPrice(this)">100,000 ₾</p>
@@ -83,6 +85,8 @@
           <div class="maxminDivFartobi">
             <div class="pricesDiv">
               <input id="minFartobiInput" type="number" placeholder="დან">
+              <span id="minFartobiSpan" class="fartobiSpan">მ²</span>
+              
               <p class="priceHeader">მინ. მ²</p>
               
               <p class="prices" data-value= 50000 onclick="addMinFartobi(this)">50,000 მ²</p>
@@ -93,6 +97,7 @@
             </div>
             <div class="pricesDiv">
               <input id="maxFartobiInput" type="number" placeholder="მდე">
+              <span id="maxFartobiSpan" class="fartobiSpan">მ²</span>
               <p class="priceHeader">მაქს. მ²</p>
               
               <p class="prices" data-value= 50000 onclick="addMaxFartobi(this)">50,000 მ²</p>

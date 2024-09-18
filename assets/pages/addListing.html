@@ -19,7 +19,7 @@
       ლისტინგის დამატება
     </div>
     <div class="formDiv">
-      <form action="">
+      <form id="addlistingForm">
           <p class="formHeader">გარიგების ტიპი</p>
           <div class="radioInputDivs">
             <div>
@@ -38,35 +38,40 @@
           </div>
 
         <div class="mainLocationDiv">
+
           <p class="formHeader">მდებარეობა</p>
-
           <div class="locInputsDivMain">
-
             <div class="locInputDiv">
               <div class="inputLabel">
-                <label for="">მისამართი *</label>
-                <input type="text">
+                <label for="address">მისამართი *</label>
+                <input type="text" id="address" name="address">
+                <span id="requiredAddress" class="inputSpan">✓ სავალდებულოა</span>
+                <span id="minAddress" class="inputSpan">✓ მინიმუმ ორი სიმბოლო</span>
               </div>
               <div class="inputLabel">
                 <label for="">საფოსტო ინდექსი *</label>
-                <input id="zipcodeInput" type="number">
+                <input id="zip_code" name="zip_code">
+                <span id="requiredZipCode" class="inputSpan">✓ სავალდებულოა</span>
+                <span id="numZipCode" class="inputSpan">✓ რიცხობრივი</span>
               </div>
             </div>
             <div class="locInputDiv">
               <div class="inputLabel">
                 <label for="">რეგიონი *</label>
                 <select id="regionsSelect">
-                  <option hidden></option>
+                  <option value="" hidden disabled selected>აირჩიეთ რეგიონი</option>
                 </select>
+                <span class="inputSpan" id="requiredRegion">✓ სავალდებულოა</span>
               </div>
               <div class="inputLabel">
                 <label for="">ქალაქი *</label>
                 <select id="citiesSelect">
-                  <option hidden></option>
                 </select>
+                <span class="inputSpan" id="requiredCity">✓ სავალდებულოა</span>
               </div>
             </div>
           </div>
+
         </div>
 
         <div class="mainDetailsDiv">
@@ -75,28 +80,47 @@
           <div class="detailsInputs">
             <div class="inputLabel">
               <label for="priceInput">ფასი *</label>
-              <input id="priceInput" type="number">
+              <input id="price" name="price">
+              <span id="requiredPrice" class="inputSpan">✓ სავალდებულოა</span>
+              <span id="numPrice" class="inputSpan">✓ რიცხობრივი</span>
             </div>
             <div id="priceInputDiv" class="inputLabel">
               <label for="areaInput">ფართობი *</label>
-              <input id="areaInput" type="number">
+              <input id="area" name="area" type="text" >
+              <span id="requiredArea" class="inputSpan">✓ სავალდებულოა</span>
+              <span id="numArea" class="inputSpan">✓ რიცხობრივი</span>
             </div>
-            <div class="inputLabel">
+            <div class="inputLabel sadzDiv">
               <label for="bedroomInput">საძინებლების რაოდენობა *</label>
-              <input id="bedroomInput" type="number">
+              <input id="bedrooms" name="bedrooms">
+              <span id="requiredBedrooms" class="inputSpan">✓ სავალდებულოა</span>
+              <span id="numBedrooms" class="inputSpan">✓ რიცხობრივი</span>
+              <span id="notfloatBedrooms" class="inputSpan">✓ მთელი რიცხვი</span>
             </div>
           </div>
 
           <div class="aboutDiv" >
             <label for="aboutInput">აღწერა *</label>
-            <textarea name="" id="aboutInput"></textarea>
+            <textarea name="description" id="aboutInput"></textarea>
+            <span id="requiredDescription" class="inputSpan">✓ სავალდებულოა</span>
+            <span id="minDescription" class="inputSpan">✓ მინიმუმ 5 სიტყვა</span>
           </div>
 
           <div class="imgDiv">
             <p>ატვირთეთ ფოტო *</p>
-            <div class="imgUploadDiv">
-              <img src="../images/imgUpload.svg" alt="">
+            <input id="imageInput" type="file" hidden name="image">
+            <div class="imgBackgroundDiv">
+              <div class="imgUploadDivListing">
+                <img src="../images/imgUpload.svg" alt="">
+              </div>
+              <div class="imgPreviewDiv" hidden>
+                <img id="previewImageListing" src="" alt="">
+                <img id="deleteImgLIsting" src="../images/delete-image-btn.svg" alt="">
+              </div>
             </div>
+              <span class="inputSpan">✓ სავალდებულოა</span>
+            <span class="inputSpan">✓ სურათის ტიპი</span>
+            <span class="inputSpan">✓ არ უნდა აღებმატებოდეს 1mb-ის ზომაში</span>
           </div>
           <div class="agentDiv">
             <p class="formHeader">აგენტი</p>
@@ -106,13 +130,14 @@
                 
               </select>
             </div>
+            <span class="inputSpan" id="requiredAgent">✓ სავალდებულოა</span>
           </div>
         </div>
+        <div class="formBtnsDiv">
+          <button id="formGaukmeba" class="whiteOrngBtn listingBtn">გაუქმება</button>
+          <button type="submit" id="submitBtn" class="orngBtn listingBtn">დაამატე ლისტინგი</button>
+        </div>
       </form>
-      <div class="formBtnsDiv">
-        <button id="formGaukmeba" class="whiteOrngBtn">გაუქმება</button>
-        <button class="orngBtn">დაამატე ლისტინგი</button>
-      </div>
     </div>
   </main>
 

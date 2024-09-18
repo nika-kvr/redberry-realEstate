@@ -9,6 +9,10 @@ $('#regioniBtn').click( () => {
   $('.fartobiDropdown').css('display', 'none');
   $('.sadzDropdown').css('display', 'none');
   $('#regioniBtn').toggleClass('active');
+
+  $('#fasiBtn').removeClass('active');
+  $('#fartobiBtn').removeClass('active');
+  $('#sadzBtn').removeClass('active');
 });
 
 $('#fasiBtn').click(() =>  {
@@ -16,6 +20,11 @@ $('#fasiBtn').click(() =>  {
   $('.regioniDropdown').css('display', 'none');
   $('.fartobiDropdown').css('display', 'none');
   $('.sadzDropdown').css('display', 'none');
+  $('#fasiBtn').toggleClass('active');
+  
+  $('#regioniBtn').removeClass('active');
+  $('#fartobiBtn').removeClass('active');
+  $('#sadzBtn').removeClass('active');
 });
 
 $('#fartobiBtn').click(() =>  {
@@ -23,6 +32,11 @@ $('#fartobiBtn').click(() =>  {
   $('.regioniDropdown').css('display', 'none');
   $('.fasiDropdown').css('display', 'none');
   $('.sadzDropdown').css('display', 'none');
+  $('#fartobiBtn').toggleClass('active');
+
+  $('#regioniBtn').removeClass('active');
+  $('#fasiBtn').removeClass('active');
+  $('#sadzBtn').removeClass('active');
 });
 
 $('#sadzBtn').click(() =>  {
@@ -30,6 +44,12 @@ $('#sadzBtn').click(() =>  {
   $('.fasiDropdown').css('display', 'none');
   $('.fartobiDropdown').css('display', 'none');
   $('.regioniDropdown').css('display', 'none');
+  $('#sadzBtn').toggleClass('active');
+  
+  $('#regioniBtn').removeClass('active');
+  $('#fasiBtn').removeClass('active');
+  $('#fartobiBtn').removeClass('active');
+
 })
 
 // prices func
@@ -124,7 +144,7 @@ $('#deleteImgBtn').on('click', function() {
 
 
 
-// add agent validations
+// agent validations
 
 const form = $('#agentForm');
 const submitBtn = $('#submitBtn');
