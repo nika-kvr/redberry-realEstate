@@ -384,8 +384,10 @@ input{
 }
 
 #previewImage{
-  width: 82px;
+  width: 92px;
+  height: 82px;
   border-radius: 4px;
+  object-fit: cover;
 }
 .imgUploadDiv{
   display: flex;
@@ -408,7 +410,7 @@ input{
 #deleteImgBtn{
   position: absolute;
   top: 80px;
-  left: 421px;
+  left: 426px;
   cursor: pointer;
 }
 .inputSpan{

@@ -1,4 +1,25 @@
-let citiesData = 
+let isAddressValid;
+let isZipcodeValid;
+let isRegionValid;
+let iscitieValid;
+let isPriceValid;
+let isAreaValid;
+let isBedroomsValid;
+let isDescriptionValid;
+let isAgentValid;
+
+
+// Load saved radio inputs
+const isrentalLocalstrg = localStorage.getItem('addlistIsrental');
+if (isrentalLocalstrg) {
+  $(`input[name="is_rental"][value="${isrentalLocalstrg}"]`).prop('checked', true);
+}
+
+$('input[name="is_rental"]').on('change', function() {
+  const selectedRadioBtn = $(this).val();
+  localStorage.setItem('addlistIsrental', selectedRadioBtn);
+});
+
 
 // get all cities
 $.ajax({
@@ -67,8 +88,20 @@ $.ajax({
   success: function(response) {
     let agents = response;
     agents.forEach(agent => {
-      let newAgentOption = $(`<option data-agent-id = "${agent.id}" value = "${agent.name} ${agent.surname}">${agent.name} ${agent.surname}</option>`);
-      $('#agentSelectfield').append(newAgentOption);
+      let newAgentItem = $(`<div class='agentItem'>${agent.name} ${agent.surname}</div>`);
+      newAgentItem.on('click', ()=>{
+        localStorage.setItem('addlistAgent', JSON.stringify({
+          'agentId': agent.id,
+          'agentName': agent.name + ' ' + agent.surname
+        }));
+        $('.airchieAgent').hide();
+        $('#selectedAgent').text(`${agent.name} ${agent.surname}`)
+        $('#selectedAgent').show();
+        $('#requiredAgent').css('color', 'green');
+        $('#agentSelectfield').css('border-color', '#808A93');
+        isAgentValid = true;
+      })
+      $('#agentsList').append(newAgentItem);
     })
   },
   error: function(xhr, status, error) {
@@ -76,18 +109,22 @@ $.ajax({
   }
 });
 
-// upload image
+// agents selectfield js
+$('#agentSelectfield').on('click', ()=>{
+  $('#agentsList').toggle();
+})
 
+// upload image
 
 let uploadedFile;
 
 const validImageTypes = ['image/jpeg', 'image/png'];
 let isImgValid;
 
-if(localStorage.getItem('fileMetadata')){
-  uploadedFile = JSON.parse(localStorage.getItem('fileMetadata'));
-}
- 
+// if(localStorage.getItem('fileMetadata')){
+//   uploadedFile = JSON.parse(localStorage.getItem('fileMetadata'));
+// }
+
 if(localStorage.getItem('addlistImg')){
   $('#previewImageListing').attr('src', localStorage.getItem('addlistImg'));
   $('.imgPreviewDiv').show();
@@ -111,7 +148,6 @@ $('#imageInput').on('change', function() {
       $('#previewImageListing').attr('src', e.target.result);
       $('.imgPreviewDiv').show();
       $('.imgUploadDivListing').hide();
-      localStorage.setItem('addlistImg', e.target.result);
       const fileMetadata = {
         name: uploadedFile.name,
         size: uploadedFile.size,
@@ -159,15 +195,6 @@ let descriptionInput = $('#aboutInput');
 let addlistImgInput = $('#imageInput');
 let agentInput = $('#agentSelectfield');
 
-let isAddressValid;
-let isZipcodeValid;
-let isRegionValid;
-let iscitieValid;
-let isPriceValid;
-let isAreaValid;
-let isBedroomsValid;
-let isDescriptionValid;
-let isAgentValid;
 
 
 // get data from localstorage
@@ -177,6 +204,14 @@ priceInput.val(localStorage.getItem('addlistPrice'));
 areaInput.val(localStorage.getItem('addlistArea'));
 bedroomsInput.val(localStorage.getItem('addlistBedrooms'));
 descriptionInput.val(localStorage.getItem('addlistDescription'));
+
+//get agent from localstorage
+let agentLocalstrg = JSON.parse(localStorage.getItem('addlistAgent'));
+if(agentLocalstrg){
+  $('.airchieAgent').hide();
+  $('#selectedAgent').text(agentLocalstrg.agentName)
+  $('#selectedAgent').show();
+}
 
 // address validation
 let validateAddress = ()=>{
@@ -379,7 +414,6 @@ let validateDescription = ()=>{
 descriptionInput.on('input', validateDescription);
 
 // image validation
-
 let validateAddlistImg = ()=>{
   
   if(uploadedFile === undefined || uploadedFile === ''){
@@ -427,6 +461,20 @@ let validateAddlistImg = ()=>{
 }
 addlistImgInput.on('change', validateAddlistImg);
 
+// agents validation
+let validateAgent = ()=>{
+  agentLocalstrg = JSON.parse(localStorage.getItem('addlistAgent'))
+  if(!agentLocalstrg){
+    $('#requiredAgent').css('color', 'red');
+    $('#agentSelectfield').css('border-color', 'red');
+    isAgentValid = false;
+  }else{
+    $('#requiredAgent').css('color', 'green');
+    $('#agentSelectfield').css('border-color', '#808A93');
+    isAgentValid = true;
+  }
+}
+
 // check form validation
 let isAddlistFormValid = ()=>{
   validateAddress();
@@ -438,13 +486,57 @@ let isAddlistFormValid = ()=>{
   validateBedrooms();
   validateDescription();
   validateAddlistImg();
+  validateAgent();
 
-  return isAddressValid;
+  return isAddressValid 
+  && isZipcodeValid
+  && isRegionValid
+  && iscitieValid
+  && isPriceValid
+  && isAreaValid
+  && isBedroomsValid
+  && isDescriptionValid
+  && isAgentValid
+  && isImgValid;
 }
 
 // post addlist
-submitBtn.on('click', function(event) {
+$('#addlistForm').on('submit', function(event) {
   event.preventDefault(); 
-  isAddlistFormValid();
+  if(!isAddlistFormValid()){
+    return
+  }
+  const formData = new FormData(this);
+
+  formData.append('agent_id', JSON.parse(localStorage.getItem('addlistAgent')).agentId);
+
+  // formData.append('image', JSON.parse(localStorage.getItem('fileMetadata')).file)
+  console.log(JSON.parse(localStorage.getItem('fileMetadata')))
+
+  // console log formdata values
+  Array.from(formData.entries()).forEach(([key, value]) => {
+    console.log(key, value);
+  });
+
+  const token = '9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44';
+  $.ajax({
+    url: 'https://api.real-estate-manager.redberryinternship.ge/api/real-estates',
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json'
+    },
+    success: function(response) {
+      console.log('Success:', response);
+    },
+    error: function(xhr, status, error) {
+      console.error('Error:', error);
+    }
+  });
+
 
 })
+

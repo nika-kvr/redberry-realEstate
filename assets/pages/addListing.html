@@ -19,19 +19,19 @@
       ლისტინგის დამატება
     </div>
     <div class="formDiv">
-      <form id="addlistingForm">
+      <form id="addlistForm">
           <p class="formHeader">გარიგების ტიპი</p>
           <div class="radioInputDivs">
             <div>
               <div>
-                <input checked type="radio" id="buyInput" name="radioInput">
+                <input checked type="radio" id="buyInput" value="0" name="is_rental">
               </div>
               <label for="buyInput">იყიდება</label>
             </div>
 
             <div>
               <div>
-                <input type="radio" id="rentInput" name="radioInput">
+                <input type="radio" id="rentInput" value='1' name="is_rental">
               </div>
               <label for="rentInput">ქირავდება</label>
             </div>
@@ -58,14 +58,14 @@
             <div class="locInputDiv">
               <div class="inputLabel">
                 <label for="">რეგიონი *</label>
-                <select id="regionsSelect">
+                <select name="region_id" id="regionsSelect">
                   <option value="" hidden disabled selected>აირჩიეთ რეგიონი</option>
                 </select>
                 <span class="inputSpan" id="requiredRegion">✓ სავალდებულოა</span>
               </div>
               <div class="inputLabel">
                 <label for="">ქალაქი *</label>
-                <select id="citiesSelect">
+                <select name="city_id" id="citiesSelect">
                   <option value="" hidden disabled selected>აირჩიეთ ქალაქი</option>
                 </select>
                 <span class="inputSpan" id="requiredCity">✓ სავალდებულოა</span>
@@ -127,9 +127,19 @@
             <p class="formHeader">აგენტი</p>
             <div>
               <p>აირჩიე</p> 
-              <select id="agentSelectfield">
-                
-              </select>
+              <div id="agentSelectfield">
+                <span id="selectedAgent" class="inputSpan" hidden></span>
+                <div class="airchieAgent">
+                  <span class="inputSpan">აირჩიე</span>
+                  <img src="../images/dropwodn.svg" alt="">
+                </div>
+                <div id="agentsList" hidden>
+                  <div id="addAgentItem" class="agentItem">
+                    <img src="../images/imgUpload.svg" alt="">
+                    <p>დაამატე აგენტი</p>
+                  </div>
+                </div>
+              </div>
             </div>
             <span class="inputSpan" id="requiredAgent">✓ სავალდებულოა</span>
           </div>
@@ -142,6 +152,6 @@
     </div>
   </main>
 
-  <script src="../javascript/addList.js"></script>
+  <script type="module" src="../javascript/addList.js"></script>
 </body>
 </html>
