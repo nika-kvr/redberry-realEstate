@@ -86,7 +86,7 @@ if(localStorage.getItem("selectedRegions") !== null){
 
 const selectedRegions = new Set(JSON.parse(selectedRegionsString));
 
-
+ 
 // modal func
 
 $('#openModal').on('click', function() {
