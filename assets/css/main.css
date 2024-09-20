@@ -416,6 +416,7 @@ input{
 .inputSpan{
   font-stretch: condensed;
   font-size: 14px;
+  color: #808A93;
 } 
 
 .active{
