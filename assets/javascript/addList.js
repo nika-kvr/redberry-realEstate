@@ -561,3 +561,6 @@ $('#addlistForm').on('submit', function(event) {
 
 })
 
+$('#gaukmebaBtn').on('click', ()=>{
+  window.location.href = '../../';
+})

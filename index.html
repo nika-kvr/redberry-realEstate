@@ -39,7 +39,7 @@
           </ul>
         </div>
         <div class="archevaDiv">
-          <button class="archevaBtn">არჩევა</button>
+          <button id="filterByRegionBtn" class="archevaBtn">არჩევა</button>
         </div>
       </div>
       
@@ -71,10 +71,9 @@
             <p class="prices" data-value= 200000 onclick="addMaxPrice(this)">200,000 ₾</p>
             <p class="prices" data-value= 300000 onclick="addMaxPrice(this)">300,000 ₾</p>
           </div>
-          
         </div>
         <div class="archevaBtnDiv">
-          <button class="archevaBtn">არჩევა</button>
+          <button id="filterByPriceBtn" class="archevaBtn">არჩევა</button>
         </div>
       </div>
       
@@ -117,7 +116,7 @@
         <p>საძინებლების რაოდენობა</p>
         <input type="number" id="sadzInput">
         <div class="archevaBtnDiv">
-          <button class="archevaBtn">არჩევა</button>
+          <button id="bedroomsQntBtn"  class="archevaBtn">არჩევა</button>
         </div>
       </div>
     </div>
@@ -127,8 +126,9 @@
   
 </div>
 
-<div class="realEstateList">
-  real estates
+<div class="realEstatesMain">
+  <div class="realEstatesList">
+  </div>  
 </div>
 
 </div>
@@ -194,6 +194,6 @@
   </div>
 </div>
 
-<script type="module" src="assets/javascript/index.js"></script>
+<script src="assets/javascript/index.js"></script>
 </body>
 </html>

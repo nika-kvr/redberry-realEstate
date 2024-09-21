@@ -1,6 +1,13 @@
+let isNameValid;
+let isSurnameValid;
+let isEmailValid;
+let isPhoneValid;
+let isImageValid;
+
 $('#addListingBtn').click(() => {
   window.location.href = 'assets/pages/addListing.html'
 })
+
 
 // filter buttons func
 $('#regioniBtn').click( () => {
@@ -9,7 +16,7 @@ $('#regioniBtn').click( () => {
   $('.fartobiDropdown').css('display', 'none');
   $('.sadzDropdown').css('display', 'none');
   $('#regioniBtn').toggleClass('active');
-
+  
   $('#fasiBtn').removeClass('active');
   $('#fartobiBtn').removeClass('active');
   $('#sadzBtn').removeClass('active');
@@ -57,36 +64,30 @@ $('#sadzBtn').click(() =>  {
 let addMinPrice = (element)=>{
   let minPrice = $(element).data('value')
   $('#minPriceInput').val(minPrice);
+  localStorage.setItem('minPrice', $('#minPriceInput').val())
 }
 
 let addMaxPrice = (element)=>{
   let maxPrice = $(element).data('value');
   $('#maxPriceInput').val(maxPrice);
+  localStorage.setItem('maxPrice', $('#maxPriceInput').val())
 }
 
-// fartobi func
+// area func
 let addMinFartobi = (element)=>{
   let minFartobi = $(element).data('value')
   $('#minFartobiInput').val(minFartobi);
+  localStorage.setItem('minArea', $('#minFartobiInput').val())
 }
 
 let addMaxFartobi = (element)=>{
   let maxFartobi = $(element).data('value');
   $('#maxFartobiInput').val(maxFartobi);
+  localStorage.setItem('maxArea', $('#maxFartobiInput').val())
 }
 
-// get selected cities
-let selectedRegionsString;
 
-if(localStorage.getItem("selectedRegions") !== null){
-  selectedRegionsString = localStorage.getItem("selectedRegions")
-}else{
-  selectedRegionsString = "[]"
-}
 
-const selectedRegions = new Set(JSON.parse(selectedRegionsString));
-
- 
 // modal func
 
 $('#openModal').on('click', function() {
@@ -107,12 +108,12 @@ $('#closeModalBtn').on('click', () => {
 // agent image upload
 
 let locStrgImg = localStorage.getItem('agentImg');
-
-if(locStrgImg !== ''){
+if(locStrgImg ){
   $('#previewImage').attr('src', locStrgImg).show();
   $('#deleteImgBtn').show();
   $('.imgUploadDiv').css('border-color', '#808A93');
   $('#uploadImg').hide();
+  
 }
 
 $('#uploadImg').on('click', function() {
@@ -121,12 +122,25 @@ $('#uploadImg').on('click', function() {
 
 $('#imageUpload').on('change', function() {
   const file = this.files[0];
+  const maxSizeInBytes = 1 * 1024 * 1024;
+  
+  if(file.size > maxSizeInBytes || !file.size ){
+    $('.imgUploadDiv').css('border-color', 'red');
+    $('#imageUpload').val('');
+    isImageValid = false;
+    return
+  }else{
+    $('.imgUploadDiv').css('border-color', '#808A93');
+    isImageValid = true;
+  }
   const reader = new FileReader();
   reader.onload = function(e) {
     $('#previewImage').attr('src', e.target.result).show();
     $('#deleteImgBtn').show();
     $('.imgUploadDiv').css('border-color', '#808A93');
     $('#uploadImg').hide();
+    
+    
     localStorage.setItem('agentImg', e.target.result)
   };
   reader.readAsDataURL(file);
@@ -155,11 +169,6 @@ let emailInput = $('#email');
 let phoneInput = $('#phone');
 let imgInput = $('#imageUpload');
 
-let isNameValid;
-let isSurnameValid;
-let isEmailValid;
-let isPhoneValid;
-let isImageValid;
 
 // get data from localstorage
 
@@ -238,7 +247,7 @@ let validateEmail = ()=> {
 
 // phone validation
 let validatePhone = ()=> {
-
+  
   if(phoneInput.val().length === 0){
     $('#requiredPhone').css('color', 'red');
     phoneInput.css('border-color', 'red');
@@ -258,7 +267,7 @@ let validatePhone = ()=> {
     phoneInput.css('border-color', '#808A93');
     isPhoneValid= true;
   }
-
+  
   if(phoneInput.val().length !== 9 || !phoneInput.val().startsWith('5') || /[^0-9]/.test(phoneInput.val())){
     $('#mobileFormatPhone').css('color', 'red');
     phoneInput.css('border-color', 'red');
@@ -268,19 +277,21 @@ let validatePhone = ()=> {
     phoneInput.css('border-color', '#808A93');
     isPhoneValid= true;
   }
-
+  
   localStorage.setItem('agentPhone', phoneInput.val());
 }
 
 // image validation
 let validateImage = ()=> {
-  if(imgInput.val() === ''){
+  
+  if(imgInput.val().length === 0){
     $('.imgUploadDiv').css('border-color', 'red');
     isImageValid = false
   }else{
     $('.imgUploadDiv').css('border-color', '#808A93');
     isImageValid = true;
   }
+  
   localStorage.setItem('agentImg', imgInput.val());
 }
 
@@ -295,17 +306,18 @@ let isFormValid = ()=>{
   validateEmail();
   validatePhone();
   validateImage();
+  
   return isNameValid && isSurnameValid && isEmailValid && isPhoneValid && isImageValid;
 }
 
 // post agent
 $('#agentForm').on('submit', function(event) {
   event.preventDefault(); 
-
+  
   if(isFormValid()){
     const formData = new FormData(this);
     const token = '9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44';
-  
+    
     $.ajax({
       url: 'https://api.real-estate-manager.redberryinternship.ge/api/agents',
       type: 'POST',
@@ -316,7 +328,21 @@ $('#agentForm').on('submit', function(event) {
         'Authorization': `Bearer ${token}`
       },
       success: function(response) {
-        console.log('Success:', response);
+        $('.imgUploadDiv').css('border-color', 'red');
+        $('#previewImage').empty();
+        $('#imageUpload').val('');
+        $('#previewImage').attr('src', '').hide();
+        $('#deleteImgBtn').hide();
+        $('#uploadImg').show();
+        localStorage.setItem('agentImg', '');
+        
+        $('#agentForm').find('input').val('');
+        $('.imgUploadDiv').css('border-color', '#808A93');
+        $('#agentForm').find('span').css('color', '#808A93');
+        localStorage.setItem('agentName', '');
+        localStorage.setItem('agentEmail', '');
+        localStorage.setItem('agentSurname', '');
+        localStorage.setItem('agentPhone', '');
       },
       error: function(xhr, status, error) {
         console.error('Error:', error);
@@ -324,36 +350,226 @@ $('#agentForm').on('submit', function(event) {
     });
     
   }
-
+  
 });
 
 
-//get all regions
+/////////////////
 
+
+
+// get selected cities
+let selectedRegionsString;
+
+if(localStorage.getItem("selectedRegions") !== null){
+  selectedRegionsString = localStorage.getItem("selectedRegions")
+}else{
+  selectedRegionsString = "[]"
+}
+
+const selectedRegions = new Set(JSON.parse(selectedRegionsString));
+
+
+// append realestates in div
+let appendRealEstateData = (data)=>{
+
+  $('.realEstatesList').empty();
+
+  data.forEach(item => {
+
+    let isRentalText = item.is_rental === 0 ? 'იყიდება' : 'ქირავდება';
+
+    $('.realEstatesList').append(`
+      <div class="realEstateCard">
+        <img class="realEstateImg" src="${item.image}" alt="">
+        <p class="realEstatePrice">${item.price} ₾</p>
+        <div class="isRentalDiv">${isRentalText}</div>
+        <img class="addressSvg" src="/assets/images/addressSvg.svg" alt="">
+        <p class="addressText inputSpan">${item.address}</p>
+        <img class="bedroomSvg" src="/assets/images/bed.svg" alt="">
+        <p class="bedroomText inputSpan">${item.bedrooms}</p>
+        <img class="areaSvg" src="/assets/images/area.svg" alt="">
+        <p class="areaText inputSpan">${item.area} მ²</p>
+        <img class="zipCodeSvg" src="/assets/images/zipCode.svg" alt="">
+        <p class="zipCodeText inputSpan">${item.zip_code}</p>
+      </div>
+  `);
+})
+}
+
+// get all real estates
+
+let getRealEstates = 
+  $.ajax({
+  url: 'https://api.real-estate-manager.redberryinternship.ge/api/real-estates',
+  type: 'GET',
+  async: false,
+  headers: {
+    'Authorization': 'Bearer 9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44' 
+  },
+  success: function(response) {
+    return 'real estates request'
+  },
+  error: function(error) {
+    console.error('Error:', error); 
+  }
+}).responseJSON;
+
+//get all regions
 $.ajax({
   url: 'https://api.real-estate-manager.redberryinternship.ge/api/regions',
   type: 'GET',
   success: function(data) {
     let regions = data;
     regions.forEach(item => {
-      let newLi = $(`<li><input data-region type="checkbox" id="${item.name}" name="${item.name}"><label for="${item.name}">${item.name}</label>`);
+      let newLi = $(`<li><input region_id = "${item.id}" type="checkbox" id="${item.id}" name="${item.name}"><label for="${item.name}">${item.name}</label>`);
       $('ul').append(newLi)
-        if(selectedRegions.has(item.name)){
-          const inputId = `#${item.name}`
-          $(inputId).prop('checked', true)
-        }
-      })
-      $('input[data-region]').change(e => {
-        if(e.target.checked){
-          selectedRegions.add(e.target.name)
-        }else{
-          selectedRegions.delete(e.target.name)
+      if(selectedRegions.has(item.id)){
+        const inputId = $(`input[region_id='${item.id}']`)
+        $(inputId).prop('checked', true)
+      }
+    })
+    $('input[region_id]').change(e => {
+      if(e.target.checked){
+        selectedRegions.add(Number(e.target.id))
+      }else{
+          selectedRegions.delete(Number(e.target.id))
         }
         localStorage.setItem('selectedRegions', JSON.stringify([...selectedRegions])) 
       })
-
+      
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log('Error:', textStatus, errorThrown);
     }
 });
+
+
+let filteredDataIds = new Set([])
+
+// filter by regions
+let filterByRegion = (data)=>{
+
+  data.forEach(realEstate => {
+    let realEstateRegionId = realEstate.city.region.id
+    if(selectedRegions.has(realEstateRegionId)){
+      filteredDataIds.add(realEstate.id)
+    }
+  })
+  console.log(filteredDataIds)
+}
+
+$('#filterByRegionBtn').on('click', ()=>{
+  filterByRegion(getRealEstates);
+})
+
+
+// filter by price
+$('#minPriceInput').val(localStorage.getItem('minPrice'))
+$('#maxPriceInput').val(localStorage.getItem('maxPrice'))
+$('#minPriceInput').on('input', ()=>{
+  localStorage.setItem('minPrice', $('#minPriceInput').val())
+})
+$('#maxPriceInput').on('input', ()=>{
+  localStorage.setItem('maxPrice', $('#maxPriceInput').val())
+})
+
+let filterByPrice = (data)=>{
+  let minPrice = Number(localStorage.getItem('minPrice'));
+  let maxPrice = Number(localStorage.getItem('maxPrice'));
+
+  //validate min and max prices
+
+  if(minPrice > maxPrice){
+    $('#minPriceInput').css('border-color', 'red');
+    $('#maxPriceInput').css('border-color', 'red');
+    return false;
+  }else{
+    $('#minPriceInput').css('border-color', '#808A93');
+    $('#maxPriceInput').css('border-color', '#808A93');
+  }
+
+  
+  data.forEach(realEstate => {
+    let realEstatePrice = Number(realEstate.price);
+    if(realEstatePrice > minPrice){
+      if(realEstatePrice < maxPrice){
+        filteredDataIds.add(realEstate.id)
+      }
+    }
+  })
+}
+
+$('#filterByPriceBtn').on('click', ()=>{
+  filterByPrice(getRealEstates)
+})
+
+// filter by area
+$('#minFartobiInput').val(localStorage.getItem('minArea'))
+$('#maxFartobiInput').val(localStorage.getItem('maxArea'))
+$('#minFartobiInput').on('input', ()=>{
+  localStorage.setItem('minArea', $('#minFartobiInput').val())
+})
+$('#maxFartobiInput').on('input', ()=>{
+  localStorage.setItem('maxArea', $('#maxFartobiInput').val())
+})
+
+let filterByArea = (data)=>{
+  let minArea = Number(localStorage.getItem('minArea'));
+  let maxArea = Number(localStorage.getItem('maxArea'));
+
+  //validate min and max areas
+  if(minArea > maxArea){
+    $('#minFartobiInput').css('border-color', 'red');
+    $('#maxFartobiInput').css('border-color', 'red');
+    return false;
+  }else{
+    $('#minFartobiInput').css('border-color', '#808A93');
+    $('#maxFartobiInput').css('border-color', '#808A93');
+  }
+
+  data.forEach(realEstate => {
+    let realEstateArea = Number(realEstate.area);
+    console.log(realEstateArea)
+    if(realEstateArea > minArea){
+      if(realEstateArea < maxArea){
+        filteredDataIds.add(realEstate.id)
+      }
+    }
+  })
+}
+
+$('#fartobiBtnArcheva').on('click', ()=>{
+  filterByArea(getRealEstates);
+})
+
+//filter by bedrooms
+$('#sadzInput').on('input', ()=>{
+  localStorage.setItem('bedroomsQuantity', $('#sadzInput').val())
+})
+$('#sadzInput').val(localStorage.getItem('bedroomsQuantity'))
+
+let filterByBedrooms = (data)=>{
+  let bedroomsQuantity = Number(localStorage.getItem('bedroomsQuantity'));
+
+  //validate bedroomos input
+  if(bedroomsQuantity < 1){
+    $('#sadzInput').css('border-color', 'red');
+    return false;
+  }else{
+    $('#sadzInput').css('border-color', '#808A93');
+  }
+  data.forEach(realEstate => {
+    let realEstateBedrooms = Number(realEstate.bedrooms);
+    console.log(realEstateBedrooms)
+    if(realEstateBedrooms === bedroomsQuantity){
+      filteredDataIds.add(realEstate.id)
+    }
+  })
+}
+
+
+// sadzineblis kliki
+$('#bedroomsQntBtn').on('click', ()=>{
+  filterByBedrooms(getRealEstates);
+})
