@@ -380,7 +380,7 @@ let appendRealEstateData = (data)=>{
     let isRentalText = item.is_rental === 0 ? 'იყიდება' : 'ქირავდება';
 
     $('.realEstatesList').append(`
-      <div class="realEstateCard">
+      <div class="realEstateCard" data-id="${item.id}">
         <img class="realEstateImg" src="${item.image}" alt="">
         <p class="realEstatePrice">${item.price} ₾</p>
         <div class="isRentalDiv">${isRentalText}</div>
@@ -444,11 +444,19 @@ $.ajax({
     }
 });
 
+// filter functionality
 
 let filteredDataIds = new Set([])
 
+const retrievedfilteredDataIds = localStorage.getItem('filteredDataIds');
+
+
 // filter by regions
 let filterByRegion = (data)=>{
+
+  if(selectedRegions.size === 0 || !selectedRegions.size){
+    return false;
+  }
 
   data.forEach(realEstate => {
     let realEstateRegionId = realEstate.city.region.id
@@ -456,30 +464,20 @@ let filterByRegion = (data)=>{
       filteredDataIds.add(realEstate.id)
     }
   })
-  console.log(filteredDataIds)
+  
 }
-
-$('#filterByRegionBtn').on('click', ()=>{
-  filterByRegion(getRealEstates);
-})
-
 
 // filter by price
 $('#minPriceInput').val(localStorage.getItem('minPrice'))
 $('#maxPriceInput').val(localStorage.getItem('maxPrice'))
-$('#minPriceInput').on('input', ()=>{
-  localStorage.setItem('minPrice', $('#minPriceInput').val())
-})
-$('#maxPriceInput').on('input', ()=>{
-  localStorage.setItem('maxPrice', $('#maxPriceInput').val())
-})
+
 
 let filterByPrice = (data)=>{
   let minPrice = Number(localStorage.getItem('minPrice'));
   let maxPrice = Number(localStorage.getItem('maxPrice'));
 
   //validate min and max prices
-
+  
   if(minPrice > maxPrice){
     $('#minPriceInput').css('border-color', 'red');
     $('#maxPriceInput').css('border-color', 'red');
@@ -488,7 +486,7 @@ let filterByPrice = (data)=>{
     $('#minPriceInput').css('border-color', '#808A93');
     $('#maxPriceInput').css('border-color', '#808A93');
   }
-
+  
   
   data.forEach(realEstate => {
     let realEstatePrice = Number(realEstate.price);
@@ -500,24 +498,16 @@ let filterByPrice = (data)=>{
   })
 }
 
-$('#filterByPriceBtn').on('click', ()=>{
-  filterByPrice(getRealEstates)
-})
 
 // filter by area
 $('#minFartobiInput').val(localStorage.getItem('minArea'))
 $('#maxFartobiInput').val(localStorage.getItem('maxArea'))
-$('#minFartobiInput').on('input', ()=>{
-  localStorage.setItem('minArea', $('#minFartobiInput').val())
-})
-$('#maxFartobiInput').on('input', ()=>{
-  localStorage.setItem('maxArea', $('#maxFartobiInput').val())
-})
+
 
 let filterByArea = (data)=>{
   let minArea = Number(localStorage.getItem('minArea'));
   let maxArea = Number(localStorage.getItem('maxArea'));
-
+  
   //validate min and max areas
   if(minArea > maxArea){
     $('#minFartobiInput').css('border-color', 'red');
@@ -527,10 +517,9 @@ let filterByArea = (data)=>{
     $('#minFartobiInput').css('border-color', '#808A93');
     $('#maxFartobiInput').css('border-color', '#808A93');
   }
-
+  
   data.forEach(realEstate => {
     let realEstateArea = Number(realEstate.area);
-    console.log(realEstateArea)
     if(realEstateArea > minArea){
       if(realEstateArea < maxArea){
         filteredDataIds.add(realEstate.id)
@@ -539,29 +528,22 @@ let filterByArea = (data)=>{
   })
 }
 
-$('#fartobiBtnArcheva').on('click', ()=>{
-  filterByArea(getRealEstates);
-})
 
 //filter by bedrooms
 $('#sadzInput').on('input', ()=>{
-  localStorage.setItem('bedroomsQuantity', $('#sadzInput').val())
+  
 })
 $('#sadzInput').val(localStorage.getItem('bedroomsQuantity'))
 
 let filterByBedrooms = (data)=>{
   let bedroomsQuantity = Number(localStorage.getItem('bedroomsQuantity'));
-
+  
   //validate bedroomos input
   if(bedroomsQuantity < 1){
-    $('#sadzInput').css('border-color', 'red');
     return false;
-  }else{
-    $('#sadzInput').css('border-color', '#808A93');
   }
   data.forEach(realEstate => {
     let realEstateBedrooms = Number(realEstate.bedrooms);
-    console.log(realEstateBedrooms)
     if(realEstateBedrooms === bedroomsQuantity){
       filteredDataIds.add(realEstate.id)
     }
@@ -569,7 +551,88 @@ let filterByBedrooms = (data)=>{
 }
 
 
-// sadzineblis kliki
-$('#bedroomsQntBtn').on('click', ()=>{
+// filter real estates
+
+// load filterrs from localstorage
+if (retrievedfilteredDataIds) {
+  filteredDataIds = new Set(JSON.parse(retrievedfilteredDataIds));
+}
+
+let filteredRealEstates = ()=>{
+  let filteredData = []
+  getRealEstates.forEach(realEstate =>{
+    if(filteredDataIds.has(realEstate.id)){
+      filteredData.push(realEstate)
+    }
+  })
+  return filteredData;
+}
+
+if(filteredDataIds.size == 0){
+  appendRealEstateData(getRealEstates);
+}else{
+  appendRealEstateData(filteredRealEstates());
+}
+
+
+let filterRealEstates = ()=>{
+  filteredDataIds.clear();
+
+  filterByRegion(getRealEstates);
+  filterByPrice(getRealEstates);
+  filterByArea(getRealEstates);
   filterByBedrooms(getRealEstates);
+  
+  localStorage.setItem('filteredDataIds', JSON.stringify([...filteredDataIds]));
+
+  if(filteredDataIds.size === 0){
+    $('.realEstatesList').empty()
+    $('.realEstatesList').append($('<p>აღნიშნული მონაცემებით განცხადება არ იძებნება</p>'))
+    return
+  }
+  appendRealEstateData(filteredRealEstates())
+}
+
+
+$('#filterByRegionBtn').on('click', ()=>{
+  filterRealEstates();
 })
+
+$('#filterByPriceBtn').on('click', ()=>{
+  localStorage.setItem('minPrice', $('#minPriceInput').val())
+  localStorage.setItem('maxPrice', $('#maxPriceInput').val())
+  filterRealEstates();
+})
+
+$('#fartobiBtnArcheva').on('click', ()=>{
+  localStorage.setItem('minArea', $('#minFartobiInput').val())
+  localStorage.setItem('maxArea', $('#maxFartobiInput').val())
+  filterRealEstates();
+})
+
+$('#bedroomsQntBtn').on('click', ()=>{
+  localStorage.setItem('bedroomsQuantity', $('#sadzInput').val())
+  filterRealEstates();
+})
+
+$('#emptyFilter').on('click', ()=>{
+  selectedRegions.clear()
+  $('input[region_id]').each((index, element) => {
+    $(element).prop('checked', false);
+  });
+  localStorage.setItem('selectedRegions', JSON.stringify([...selectedRegions])) 
+  localStorage.setItem('maxArea', '');
+  localStorage.setItem('minArea', '');
+  localStorage.setItem('maxPrice', '');
+  localStorage.setItem('bedroomsQuantity', '');
+  localStorage.setItem('minPrice', '');
+  localStorage.setItem('filteredDataIds', '[]');
+
+  appendRealEstateData(getRealEstates);
+
+});
+
+$('.realEstateCard').on('click', function() {
+  const id = $(this).data('id');
+  window.location.href = `assets/pages/singlepage.html?id=${id}`;
+});

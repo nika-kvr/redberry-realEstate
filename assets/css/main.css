@@ -520,3 +520,18 @@ input{
   color: #fff;
   border-radius: 15px;
 }
+#nodataText{
+  color: #575757;
+  font-size: 20px;
+}
+
+.realEstatesMain{
+  margin: auto;
+  margin-top: 16px;
+  width: 1596px;
+}
+#emptyFilter{
+  display: none;
+  display: inline-block;
+  cursor: pointer;
+}

@@ -1,0 +1,206 @@
+*{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Fira Go';
+  src: url('../fonts/FiraGO-Medium.otf') format('opentype');
+}
+
+body{
+  font-family: 'Fira Go';
+}
+button{
+  font-family: 'Fira Go';
+}
+
+#redberryLogo{
+  margin: 38px 0 38px 162px;
+}
+
+.aboutText{
+  font-size: 24px;
+  color: #808A93;
+}
+
+.realestateInfo{
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  width: 1591px;
+  margin-top: 64px;
+  margin-bottom: 53px;
+}
+.singleImg{
+  width: 839px;
+  height: 670px;
+  object-fit: cover;  
+  border-radius: 15px;
+}
+.backBtnDiv{
+  width: 100%;
+  margin-bottom: 29px;
+}
+#backBtn{
+  cursor: pointer;
+}
+.aboutDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px 68px;
+}
+.singlePrice{
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.addressDiv{
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 24px;
+}
+.aboutDescription{
+  width: 503px;
+  font-size: 16px;
+}
+.agentDiv{
+  margin-top: 40px;
+  width: 503px;
+  height: 174px;
+  border: 1px solid #DBDBDB;
+  border-radius: 8px;
+  padding: 24px 20px;
+}
+.agentImg{
+  object-fit: cover;
+  width: 72px;
+  height: 72px;
+  border-radius: 100px;
+}
+
+.agentDiv{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.imgNameDiv{
+  display: flex;
+  flex-direction: row;
+  font-size: 21px;
+  gap: 14px;
+}
+.agent{
+  font-size: 15px;
+}
+.mailDiv{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+.aboutMail{
+  color: #808A93; 
+  font-size: 14px;
+}
+.phoneDiv{
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+.deleteListingBtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:20px;
+  width: 131px;
+  height: 34px;
+  border: 1px solid #676E76;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.dltListingText{
+  font-size: 12px;
+  color: #808A93;
+}
+
+.imgDateDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.aboutDate{
+  color: #676E76;
+  margin-top: 11px;
+}
+
+.modal {
+  display: none; 
+  position: fixed;         
+  z-index: 1000;            
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;             
+  background-color: rgba(0, 0, 0, 0.5); 
+  backdrop-filter: blur(5px);
+}
+
+.modalContent{
+  display: flex;
+  gap: 35px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 623px;
+  height: 222px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.orngBtn{
+  all:unset;
+  background-color: #F93B1D;
+  color: #fff;
+  cursor: pointer;
+  font-size: medium;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.orngBtn:hover{
+  background-color: #DF3014;
+}
+
+.whiteOrngBtn{
+  all:unset;
+  background-color: #fff;
+  color: #F93B1D;
+  cursor: pointer;
+  font-size: medium;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #F93B1D;
+  margin-left: 20px;
+}
+.whiteOrngBtn:hover{
+  background-color: #F93B1D;
+  color: #FFF;
+}
+.modalText{
+  font-size: 24px;
+}
+.modalsBtnsDiv{
+  display: flex;
+  gap: 31px;
+}
