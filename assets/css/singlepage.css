@@ -219,3 +219,28 @@ button{
   color: #fff;
   border-radius: 15px;
 }
+
+/* carousel */
+
+/* .carousel {
+  width: 1596px;
+  height: 455px;
+  overflow: hidden;
+  position: relative;
+  margin: auto;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item {
+  width: 384px;
+  height: 100%;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 16px;
+} */

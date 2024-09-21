@@ -316,7 +316,7 @@ $('#agentForm').on('submit', function(event) {
   
   if(isFormValid()){
     const formData = new FormData(this);
-    const token = '9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44';
+    const token = '9d109656-71bc-4a80-9b93-22607c5e61fd';
     
     $.ajax({
       url: 'https://api.real-estate-manager.redberryinternship.ge/api/agents',
@@ -405,7 +405,7 @@ let getRealEstates =
   type: 'GET',
   async: false,
   headers: {
-    'Authorization': 'Bearer 9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44' 
+    'Authorization': 'Bearer 9d109656-71bc-4a80-9b93-22607c5e61fd' 
   },
   success: function(response) {
     return 'real estates request'

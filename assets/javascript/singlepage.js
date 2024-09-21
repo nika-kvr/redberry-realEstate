@@ -6,12 +6,11 @@ realEstateId = urlParams.get('id')
 $.ajax({
   url: `https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${realEstateId}`,
   headers: {
-    'Authorization': 'Bearer 9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44' 
+    'Authorization': 'Bearer 9d109656-71bc-4a80-9b93-22607c5e61fd' 
   },
   type: 'GET',
   async: false,
   success: function(data) {
-    console.log(data)
     let isRentalText = data.is_rental === 0 ? 'იყიდება' : 'ქირავდება';
     $('.realestateInfo').append(`
       <div class="backBtnDiv">
@@ -67,6 +66,7 @@ $.ajax({
         </div>
       </div>
     `)
+    console.log(data)
   },
   error: function(jqXHR, textStatus, errorThrown) {
     console.log('Error:', textStatus, errorThrown);
@@ -98,7 +98,7 @@ $('#deleteRealestateBtn').on('click', ()=>{
   $.ajax({
     url: `https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${realEstateId}`,
     headers: {
-      'Authorization': 'Bearer 9cfbfa11-2b4d-4396-9ac7-b8c3770ebb44' 
+      'Authorization': 'Bearer 9d109656-71bc-4a80-9b93-22607c5e61fd' 
     },
     type: 'DELETE',
     success: function(data) {
@@ -109,3 +109,17 @@ $('#deleteRealestateBtn').on('click', ()=>{
     }
   });
 })
+
+// const itemWidth = 384; 
+// const carouselInner = $('.carousel-inner');
+// const items = $('.carousel-item');
+// let index = 0;
+
+// $('.next').on('click', () => {
+//     index++;
+//     if (index >= items.length) {
+//         index = 0;
+//     }
+//     const offset = -(itemWidth * index);
+//     carouselInner.css('transform', `translateX(${offset}px)`);
+// });
