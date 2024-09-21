@@ -246,3 +246,6 @@ select{
   align-items: center;
   gap: 8px;
 }
+#selectedAgent{
+  color: #2D3648;
+}

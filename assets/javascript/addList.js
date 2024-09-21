@@ -121,10 +121,6 @@ let uploadedFile;
 const validImageTypes = ['image/jpeg', 'image/png'];
 let isImgValid;
 
-// if(localStorage.getItem('fileMetadata')){
-//   uploadedFile = JSON.parse(localStorage.getItem('fileMetadata'));
-// }
-
 if(localStorage.getItem('addlistImg')){
   $('#previewImageListing').attr('src', localStorage.getItem('addlistImg'));
   $('.imgPreviewDiv').show();
@@ -167,7 +163,6 @@ $('#deleteImgLIsting').on('click', function() {
   $('#previewImageListing').attr('src', '');
   $('.imgUploadDivListing').show();
   $('.imgPreviewDiv').hide();
-  localStorage.setItem('addlistImg', '');
   localStorage.setItem('fileMetadata', '');
   
   $('#requiredImg').css('color', 'red');
@@ -206,10 +201,15 @@ bedroomsInput.val(localStorage.getItem('addlistBedrooms'));
 descriptionInput.val(localStorage.getItem('addlistDescription'));
 
 //get agent from localstorage
-let agentLocalstrg = JSON.parse(localStorage.getItem('addlistAgent'));
-if(agentLocalstrg){
+let agentLocalstrg = localStorage.getItem('addlistAgent');
+let agentData;
+if(agentLocalstrg !== ''){
+  agentData = JSON.parse(agentLocalstrg)
+}
+
+if(agentData){
   $('.airchieAgent').hide();
-  $('#selectedAgent').text(agentLocalstrg.agentName)
+  $('#selectedAgent').text(agentData.agentName)
   $('#selectedAgent').show();
 }
 
@@ -274,9 +274,9 @@ let validateRegion = ()=>{
     regionInput.css('border-color', '#808A93');
     isRegionValid = true;
   }
-  if(regionInput.val().length !== 0){
-    localStorage.setItem('addlistRegion', regionInput.val());
-  }
+
+  localStorage.setItem('addlistRegion', regionInput.val());
+  
 }
 regionInput.on('change', validateRegion);
 
@@ -291,9 +291,9 @@ let validateCity = ()=>{
     citieInput.css('border-color', '#808A93');
     iscitieValid = true;
   }
-  if(citieInput.val().length !== 0){
-    localStorage.setItem('addlistCity', citieInput.val());
-  }
+  
+  localStorage.setItem('addlistCity', citieInput.val());
+  
 }
 citieInput.on('change', validateCity)
 
@@ -423,6 +423,7 @@ let validateAddlistImg = ()=>{
     $('#sizeImg').css('color', 'red');
 
     isImgValid = false;
+    
     return
   }
 
@@ -458,13 +459,13 @@ let validateAddlistImg = ()=>{
     isImgValid = true;
   }
 
+
 }
 addlistImgInput.on('change', validateAddlistImg);
 
 // agents validation
 let validateAgent = ()=>{
-  agentLocalstrg = JSON.parse(localStorage.getItem('addlistAgent'))
-  if(!agentLocalstrg){
+  if(localStorage.getItem('addlistAgent') === '' || localStorage.getItem('addlistAgent') === null){
     $('#requiredAgent').css('color', 'red');
     $('#agentSelectfield').css('border-color', 'red');
     isAgentValid = false;
@@ -531,6 +532,26 @@ $('#addlistForm').on('submit', function(event) {
     },
     success: function(response) {
       console.log('Success:', response);
+      $('#selectedAgent').text('');
+      $('#addlistForm').find('input, select, textarea').val('');
+      $('#addlistForm').find('span').css('color', '#808A93');
+      $('#previewImageListing').empty();
+      $('#imageInput').val('');
+      $('#previewImageListing').attr('src', '');
+      $('.imgUploadDivListing').show();
+      $('.imgPreviewDiv').hide();
+      uploadedFile = '';
+      localStorage.setItem('addlistAddress', '');
+      localStorage.setItem('addlistAgent', '');
+      localStorage.setItem('addlistArea', '');
+      localStorage.setItem('addlistBedrooms', '');
+      localStorage.setItem('addlistCity', '');
+      localStorage.setItem('addlistDescription', '');
+      localStorage.setItem('addlistPrice', '');
+      localStorage.setItem('addlistRegion', '');
+      localStorage.setItem('addlistZipcode', '');
+      localStorage.setItem('fileMetadata', '');
+
     },
     error: function(xhr, status, error) {
       console.error('Error:', error);
