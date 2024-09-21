@@ -2,13 +2,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 realEstateId = urlParams.get('id')
 
-$('#backBtn').on('click', ()=>{
-  window.location.href = '../../';
-})
-
-
-
-
 // get single real estate
 $.ajax({
   url: `https://api.real-estate-manager.redberryinternship.ge/api/real-estates/${realEstateId}`,
@@ -19,11 +12,13 @@ $.ajax({
   async: false,
   success: function(data) {
     console.log(data)
+    let isRentalText = data.is_rental === 0 ? 'იყიდება' : 'ქირავდება';
     $('.realestateInfo').append(`
       <div class="backBtnDiv">
         <img id="backBtn" src="../images/backBtn.svg" alt="">
       </div>
       <div class="imgDateDiv">
+        <div class="isRentalDiv">${isRentalText}</div>
         <img class="singleImg" src="${data.image}" alt="">
         <p class="aboutDate">გამოქვეყნების თარიღი  ${data.created_at.slice(0, 10)}</p>
       </div>
@@ -77,6 +72,11 @@ $.ajax({
     console.log('Error:', textStatus, errorThrown);
   }
 });
+
+$('#backBtn').on('click', ()=>{
+  window.location.href = '../../';
+})
+
 
 $('.dltListingText').on('click', ()=>{
   $('#myModal').show()
